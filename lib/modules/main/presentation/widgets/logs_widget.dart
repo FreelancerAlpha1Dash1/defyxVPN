@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:defyx_vpn/modules/core/log.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
-import 'dart:async';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 // State class for logs
 class LogsState {
@@ -44,8 +46,9 @@ class LogsNotifier extends StateNotifier<LogsState> {
         List<String> newLogEntries = newLogs.split('\n');
 
         // Filter out empty lines and already shown logs
-        List<String> filteredNewLogs =
-            newLogEntries.where((log) => log.isNotEmpty && !_existingLogs.contains(log)).toList();
+        List<String> filteredNewLogs = newLogEntries
+            .where((log) => log.isNotEmpty && !_existingLogs.contains(log))
+            .toList();
 
         if (filteredNewLogs.isNotEmpty) {
           // Add new logs to the existing logs set to avoid duplicates

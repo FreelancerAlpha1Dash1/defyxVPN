@@ -5,6 +5,7 @@ import 'package:defyx_vpn/modules/core/vpn.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:defyx_vpn/modules/core/network.dart';
 import 'package:defyx_vpn/shared/providers/connection_state_provider.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version/version.dart';
