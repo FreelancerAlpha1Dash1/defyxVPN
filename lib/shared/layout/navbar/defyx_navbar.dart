@@ -115,7 +115,7 @@ class DefyxNavBar extends ConsumerWidget {
   }
 
   void _showShareDialog(BuildContext context, WidgetRef ref) {
-    ref.read(currentScreenProvider.notifier).state = AppScreen.share;
+    ref.read(currentScreenProvider.notifier).setScreen(AppScreen.share);
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
@@ -142,7 +142,7 @@ class DefyxNavBar extends ConsumerWidget {
         );
       },
     ).then((_) {
-      ref.read(currentScreenProvider.notifier).state = AppScreen.home;
+      ref.read(currentScreenProvider.notifier).setScreen(AppScreen.home);
     });
   }
 }

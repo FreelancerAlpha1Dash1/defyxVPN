@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum LoggerStatus { loading, connecting, switching_method }
 
@@ -12,13 +12,13 @@ class LoggerState {
   }
 }
 
-final loggerStateProvider =
-    StateNotifierProvider<LoggerStateNotifier, LoggerState>((ref) {
-      return LoggerStateNotifier();
-    });
+final loggerStateProvider = NotifierProvider<LoggerStateNotifier, LoggerState>(
+  LoggerStateNotifier.new,
+);
 
-class LoggerStateNotifier extends StateNotifier<LoggerState> {
-  LoggerStateNotifier() : super(const LoggerState());
+class LoggerStateNotifier extends Notifier<LoggerState> {
+  @override
+  LoggerState build() => const LoggerState();
 
   void setLoading() {
     state = LoggerState(status: LoggerStatus.loading);
