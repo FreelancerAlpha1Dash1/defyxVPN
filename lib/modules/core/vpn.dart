@@ -352,11 +352,9 @@ class VPN {
   }
 
   Future<void> initVPN() async {
-    _container?.read(settingsLoadingProvider.notifier).state = true;
     await _container?.read(flowlineServiceProvider).saveFlowline(true);
     await _vpnBridge.setAsnName();
     await _container?.read(flowlineServiceProvider).saveFlowline(false);
-    _container?.read(settingsLoadingProvider.notifier).state = false;
   }
 
   Future<void> _updatePing() async {
