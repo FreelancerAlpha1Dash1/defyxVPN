@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../modules/main/presentation/screens/main_screen.dart';
@@ -166,9 +165,18 @@ final routerProvider = Provider<GoRouter>((ref) {
   );
 });
 
-final routeInformationProvider =
-    ChangeNotifierProvider<GoRouteInformationProvider>(
-        (ref) => ref.watch(routerProvider).routeInformationProvider);
+class RouteInformationNotifier extends Notifier<GoRouteInformationProvider> {
+  @override
+  GoRouteInformationProvider build() {
+    return ref.watch(routerProvider).routeInformationProvider;
+  }
+}
 
-final currentRouteProvider =
-    Provider((ref) => ref.watch(routeInformationProvider).value.uri.toString());
+final routeInformationProvider =
+NotifierProvider<RouteInformationNotifier, GoRouteInformationProvider>(
+  RouteInformationNotifier.new,
+);
+
+final currentRouteProvider = Provider(
+      (ref) => ref.watch(routeInformationProvider).value.uri.toString(),
+);

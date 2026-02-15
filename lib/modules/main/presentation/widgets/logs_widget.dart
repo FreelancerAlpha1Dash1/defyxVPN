@@ -4,7 +4,6 @@ import 'package:defyx_vpn/modules/core/log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 
 // State class for logs
 class LogsState {
@@ -22,8 +21,17 @@ class LogsState {
 }
 
 // Provider for logs state
-class LogsNotifier extends StateNotifier<LogsState> {
-  LogsNotifier() : super(LogsState());
+class LogsNotifier extends Notifier<LogsState> {
+  @override
+  LogsState build() {
+    ref.onDispose(() => stopAutoRefresh());
+    return LogsState();
+  }
+
+  void setLogs(List<String> newLogs) {
+    state = state.copyWith(logs: newLogs);
+  }
+
   Timer? _refreshTimer;
   bool _isFetching = false; // Track if a fetch operation is in progress
   final Set<String> _existingLogs = {};
@@ -115,18 +123,10 @@ class LogsNotifier extends StateNotifier<LogsState> {
       _refreshTimer = null;
     }
   }
-
-  @override
-  void dispose() {
-    stopAutoRefresh();
-    super.dispose();
-  }
 }
 
 // Provider for the logs state
-final logsProvider = StateNotifierProvider<LogsNotifier, LogsState>((ref) {
-  return LogsNotifier();
-});
+final logsProvider = NotifierProvider<LogsNotifier, LogsState>(LogsNotifier.new);
 
 // A utility widget that can be used to add shake-to-show-logs functionality to any screen
 class ShakeLogDetector extends ConsumerStatefulWidget {
@@ -181,7 +181,7 @@ class _LogPopupContentState extends ConsumerState<LogPopupContent> {
         if (filteredLogs.isNotEmpty) {
           logsNotifier._existingLogs.clear();
           logsNotifier._existingLogs.addAll(filteredLogs);
-          logsNotifier.state = logsNotifier.state.copyWith(logs: filteredLogs);
+          logsNotifier.setLogs(filteredLogs);
         }
       }
 
@@ -445,7 +445,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
           logsNotifier._existingLogs.addAll(filteredLogs);
 
           // Update the state with all logs
-          logsNotifier.state = logsNotifier.state.copyWith(logs: filteredLogs);
+          logsNotifier.setLogs(filteredLogs);
         }
       }
 
