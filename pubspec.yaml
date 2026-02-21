@@ -4,7 +4,7 @@ publish_to: "none"
 version: 3.8.2+234
 
 environment:
-  sdk: ^3.5.3
+  sdk: ^3.8.0
 
 dependencies:
   flutter:
@@ -49,6 +49,7 @@ dependencies:
   path_provider: ^2.1.1
   msix: ^3.16.12
   flutter_native_splash: ^2.4.7
+  file_picker: ^10.3.10
 
 dev_dependencies:
   flutter_test:

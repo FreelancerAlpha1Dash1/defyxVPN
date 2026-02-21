@@ -1,3 +1,4 @@
+import 'package:defyx_vpn/shared/layout/navbar/widgets/sync_menu_dropdown.dart';
 import 'package:defyx_vpn/shared/services/animation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -269,6 +270,8 @@ class _SettingsGroupWidgetState extends State<SettingsGroupWidget>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  SyncMenuDropdown(),
+                  Spacer(),
                   GestureDetector(
                     onTap: _handleReset,
                     child: Row(
