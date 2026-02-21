@@ -226,7 +226,7 @@ class VPN {
     analyticsService.logVpnConnected(
         pattern, groupState?.groupName, connectionDuration);
 
-    await _container?.read(flowlineServiceProvider).saveFlowline(false);
+    await _container?.read(flowlineServiceProvider).saveFlowline(loadFromCache: false);
   }
 
   Future<void> refreshPing() async {
@@ -349,9 +349,9 @@ class VPN {
   }
 
   Future<void> initVPN() async {
-    await _container?.read(flowlineServiceProvider).saveFlowline(true);
+    await _container?.read(flowlineServiceProvider).saveFlowline(loadFromCache: true);
     await _vpnBridge.setAsnName();
-    await _container?.read(flowlineServiceProvider).saveFlowline(false);
+    await _container?.read(flowlineServiceProvider).saveFlowline(loadFromCache: false);
   }
 
   Future<void> _updatePing() async {
